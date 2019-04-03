@@ -1,0 +1,23 @@
+{
+  "name": "cf-hub-experimental",
+  "version": "1.0.0",
+  "description": "Connext Hub using Counterfactual Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConnextProject/cf-hub-experimental.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ConnextProject/cf-hub-experimental/issues"
+  },
+  "homepage": "https://github.com/ConnextProject/cf-hub-experimental#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^11.13.0"
+  }
+}
