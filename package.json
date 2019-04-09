@@ -4,7 +4,8 @@
   "description": "Connext Hub using Counterfactual Framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "ts-node src/main.ts"
   },
   "repository": {
     "type": "git",
@@ -16,8 +17,16 @@
     "url": "https://github.com/ConnextProject/cf-hub-experimental/issues"
   },
   "homepage": "https://github.com/ConnextProject/cf-hub-experimental#readme",
-  "dependencies": {},
+  "dependencies": {
+    "bignumber.js": "^8.1.1",
+    "connect-redis": "^3.4.1",
+    "cookie-parser": "^1.4.4",
+    "ethers": "^4.0.27",
+    "express-session": "^1.15.6",
+    "web3": "^1.0.0-beta.52"
+  },
   "devDependencies": {
-    "@types/node": "^11.13.0"
+    "@types/node": "^11.13.0",
+    "ts-node": "^8.0.3"
   }
 }
