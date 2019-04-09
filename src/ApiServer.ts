@@ -49,8 +49,8 @@ function bodyTextMiddleware(opts: { maxSize: number }) {
     const rawPromise = ezPromise<MaybeRes<Buffer>>()
     const textPromise = ezPromise<MaybeRes<string>>()
 
-    req.getRawBody = () => maybe.unwrap(rawPromise.promise)
-    req.getText = () => maybe.unwrap(textPromise.promise)
+    req.getRawBody = () => (maybe as any).unwrap(rawPromise.promise)
+    req.getText = () => (maybe as any).unwrap(textPromise.promise)
 
     const size = +req.headers['content-length']
     if (size != size || size > opts.maxSize) {
@@ -60,7 +60,7 @@ function bodyTextMiddleware(opts: { maxSize: number }) {
           `bodyTextMiddleware: no content-length; not parsing body.`
       )
       LOG.debug(msg)
-      const rej = maybe.reject(new Error(msg))
+      const rej = (maybe as any).reject(new Error(msg))
       rawPromise.resolve(rej as any)
       textPromise.resolve(rej as any)
       return next()
@@ -76,8 +76,8 @@ function bodyTextMiddleware(opts: { maxSize: number }) {
 
     req.on('end', () => {
       // Assume UTF-8 because there's no easy way to get the correct charset ¯\_(ツ)_/¯
-      rawPromise.resolve(maybe.accept(rawData))
-      textPromise.resolve(maybe.accept(rawData.toString('utf8')))
+      rawPromise.resolve((maybe as any).accept(rawData))
+      textPromise.resolve((maybe as any).accept(rawData.toString('utf8')))
     })
 
     return next()

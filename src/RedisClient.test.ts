@@ -36,7 +36,7 @@ describe('redisCache', () => {
   })
 
   it('does not cache when doNotCache is used', async () => {
-    assert.equal(await cachedGet('foo', redisCache.doNotCache('xxx')), 'xxx')
+    assert.equal(await cachedGet('foo', (redisCache as any).doNotCache('xxx')), 'xxx')
     assert.equal(await cachedGet('foo'), 'foo')
     assert.equal(await cachedGet('foo'), 'foo')
     assert.equal(await cachedGet('foo'), 'foo')

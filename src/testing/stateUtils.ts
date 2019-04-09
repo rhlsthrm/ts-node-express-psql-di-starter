@@ -1,4 +1,4 @@
-export function mkAddress(prefix: string = '0x'): Address {
+export function mkAddress(prefix: string = '0x') {
   return prefix.padEnd(42, '0')
 }
 

@@ -8,7 +8,7 @@ export function getRedisClient(redisUrl: string): RedisClient {
 
 export async function redisCache<T>(
   cxn: RedisClient,
-  opts: { key: string, timeout: number },
+  opts: { key: string, timeout?: number },
   cb: () => Promise<T | DoNotCache<T>>,
 ): Promise<T> {
   opts = {
@@ -25,7 +25,7 @@ export async function redisCache<T>(
   if (val && (val as any).__do_not_cache__)
     return (val as any).val
 
-  await cxn.setex(key, Math.ceil(opts.timeout / 1e3), JSON.stringify(val))
+  await cxn.setex(key, Math.ceil(opts.timeout! / 1e3), JSON.stringify(val))
   return val as T
 }
 
@@ -34,7 +34,7 @@ export interface DoNotCache<T> {
   val: T,
 }
 
-redisCache.doNotCache = <T>(val: T): DoNotCache<T> => {
+(redisCache as any).doNotCache = <T>(val: T): DoNotCache<T> => {
   return {
     __do_not_cache__: true,
     val,

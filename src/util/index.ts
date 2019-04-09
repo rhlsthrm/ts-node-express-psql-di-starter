@@ -222,14 +222,15 @@ export function synchronized(lockName: string) {
 export type MaybeRes<T> = [T, any] & { res: T, err: any }
 export function maybe<T>(p: Promise<T>): Promise<MaybeRes<T>> {
   return (p as Promise<T>).then(
-    res => maybe.accept(res),
-    err => maybe.reject<T>(err),
+    res => (maybe as any).accept(res),
+    // @ts-ignore
+    err => (maybe as any).reject<T>(err),
   )
 }
 
-maybe.accept = <T>(res: T): MaybeRes<T> => Object.assign([res, null], { res, err: null }) as any
-maybe.reject = <T>(err: any): MaybeRes<T> => Object.assign([null, err], { res: null, err }) as any
-maybe.unwrap = async <T>(p: Promise<MaybeRes<T>>) => {
+(maybe as any).accept = <T>(res: T): MaybeRes<T> => Object.assign([res, null], { res, err: null }) as any
+(maybe as any).reject = <T>(err: any): MaybeRes<T> => Object.assign([null, err], { res: null, err }) as any
+(maybe as any).unwrap = async <T>(p: Promise<MaybeRes<T>>) => {
   const [res, err] = await p
   if (err)
     throw new Error(err)
