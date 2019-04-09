@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon --nolazy -r ts-node/register src/main.ts",
-    "migrate": "db-migrate up --verbose all"
+    "migrate": "db-migrate up --verbose all",
+    "build": "tsc",
+    "start": "node ./dist/main.ts"
   },
   "repository": {
     "type": "git",

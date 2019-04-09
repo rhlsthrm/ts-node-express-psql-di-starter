@@ -1,8 +1,8 @@
 import * as express from 'express'
-import { RouteBasedACL } from '../RouteBasedAcl'
+import { RouteBasedACL } from '../role/RouteBasedAcl'
 import log from '../util/log'
 import Config from '../Config'
-import { Role } from '../Role'
+import { Role } from '../role/Role'
 import parseAuthHeader from '../util/parseAuthHeader'
 
 const LOG = log('AuthHandler')
