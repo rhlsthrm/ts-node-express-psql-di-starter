@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "ts-node src/main.ts",
+    "start:dev": "nodemon --nolazy -r ts-node/register src/main.ts",
     "migrate": "db-migrate up --verbose all"
   },
   "repository": {
@@ -23,13 +23,21 @@
     "connect-redis": "^3.4.1",
     "cookie-parser": "^1.4.4",
     "ethers": "^4.0.27",
+    "express": "^4.16.4",
+    "express-promise-router": "^3.0.3",
     "express-session": "^1.15.6",
+    "logdna": "^3.0.1",
+    "path-to-regexp": "^3.0.0",
     "web3": "^1.0.0-beta.52"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.6",
     "@types/node": "^11.13.2",
+    "chai": "^4.2.0",
     "db-migrate": "^0.11.5",
     "db-migrate-pg": "^0.5.0",
-    "ts-node": "^8.0.3"
+    "nodemon": "^1.18.11",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.4.2"
   }
 }

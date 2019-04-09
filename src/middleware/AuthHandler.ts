@@ -1,8 +1,8 @@
 import * as express from 'express'
-import {RouteBasedACL} from '../RouteBasedAcl'
+import { RouteBasedACL } from '../RouteBasedAcl'
 import log from '../util/log'
 import Config from '../Config'
-import {Role} from '../Role'
+import { Role } from '../Role'
 import parseAuthHeader from '../util/parseAuthHeader'
 
 const LOG = log('AuthHandler')
@@ -15,13 +15,9 @@ export default interface AuthHandler {
 export class DefaultAuthHandler implements AuthHandler {
   private acl: RouteBasedACL = new RouteBasedACL()
 
-  private config: Config
-
   private adminAddresses: Set<string> = new Set()
 
-  constructor(config: Config) {
-    this.config = config
-
+  constructor(private config: Config) {
     this.cacheConfig()
     this.defaultAcl()
   }
@@ -29,7 +25,7 @@ export class DefaultAuthHandler implements AuthHandler {
   async rolesFor(req: express.Request): Promise<Role[]> {
     const authHeader = parseAuthHeader(req)
 
-    const roles = []
+    const roles: Role[] = []
 
     if (req.session && req.session.address) {
       roles.push(Role.AUTHENTICATED)
@@ -76,10 +72,6 @@ export class DefaultAuthHandler implements AuthHandler {
   private defaultAcl() {
     this.acl
       .addRoute('/auth/(.*)', Role.NONE)
-      .addRoute('/branding', Role.NONE)
       .addRoute('/config', Role.NONE)
-      .addRoute('/exchangeRate', Role.NONE)
-      .addRoute('/featureFlags', Role.NONE)
-      .addRoute('/gasPrice/(.*)', Role.NONE)
   }
 }

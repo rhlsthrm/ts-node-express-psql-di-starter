@@ -5,7 +5,9 @@ const ENV_VARS: string[] = [
   'ETH_RPC_URL',
   'SESSION_SECRET',
   'REDIS_URL',
-  'PORT'
+  'PORT',
+  'SERVICE_USER_KEY',
+  'DATABASE_URL'
 ]
 
 const env = process.env.NODE_ENV || 'development'
@@ -28,14 +30,18 @@ export default class Config {
     })
 
     for (let key in (overrides || {})) {
-      // @ts-ignore
-      instance[key] = overrides[key]
+      instance[key] = overrides![key]
     }
     return instance
   }
 
-  public ethRpcUrl: string = ''
-  public sessionSecret: string = ''
-  public redisUrl: string = ''
+  public ethRpcUrl: string = 'http://localhost:8545'
+  public sessionSecret: string = 'foo'
+  public redisUrl: string = 'redis://localhost:6379'
   public port: number = 8080
+  public authDomainWhitelist: string[] =  ['localhost']
+  public registry?: Registry
+  public serviceUserKey: string = 'changeme'
+  public adminAddresses: string[] = []
+  public databaseUrl: string = 'postgresql://localhost:5432/hub'
 }

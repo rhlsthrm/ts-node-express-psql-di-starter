@@ -1,8 +1,8 @@
 import * as express from 'express';
-import {default as AuthHandler, DefaultAuthHandler} from './AuthHandler'
+import { default as AuthHandler, DefaultAuthHandler } from './AuthHandler'
 import Config from '../Config'
-import {Role} from '../Role'
-import {assert} from 'chai'
+import { Role } from '../Role'
+import { assert } from 'chai'
 
 describe('AuthHandler', () => {
   let handler: AuthHandler
@@ -16,7 +16,7 @@ describe('AuthHandler', () => {
 
   describe('#rolesFor', () => {
     it('should return a NONE role if the user is not a service user or logged in', async () => {
-      const roles = await handler.rolesFor(fakeReq(null, null,))
+      const roles = await handler.rolesFor(fakeReq(null, null))
       assert.deepEqual(roles, [Role.NONE])
     })
 
@@ -47,7 +47,7 @@ describe('AuthHandler', () => {
 })
 
 
-function fakeReq (authHeader: string|null, session: any): express.Request {
+function fakeReq(authHeader: string | null, session: any): express.Request {
   return {
     get: (name: string) => {
       return name === 'Authorization' ? authHeader : null

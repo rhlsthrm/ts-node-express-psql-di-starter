@@ -1,9 +1,9 @@
 import { MaybeRes } from './util'
 import { ezPromise, maybe } from './util'
 import Config from './Config'
-import * as express from 'express'
-import * as session from 'express-session'
-import * as cookie from 'cookie-parser'
+import express from 'express'
+import session from 'express-session'
+import cookie from 'cookie-parser'
 import log from './util/log'
 import { Container } from './Container'
 import { ApiService } from './api/ApiService'
@@ -11,7 +11,7 @@ import {
   default as AuthHandler,
 } from './middleware/AuthHandler'
 import AuthHeaderMiddleware from './middleware/AuthHeaderMiddleware'
-import * as cors from 'cors'
+import cors from 'cors'
 
 const LOG = log('ApiServer')
 const SESSION_LOG = log('ConnectRedis')
@@ -128,6 +128,7 @@ export class ApiServer {
         cookie: {
           httpOnly: true,
         },
+        saveUninitialized: true
       }),
     )
 
@@ -137,7 +138,7 @@ export class ApiServer {
     // reads and exhausts the body, so we can't go after that one.
     this.app.use(bodyTextMiddleware({ maxSize: 1024 * 1024 * 10 }))
 
-    this.app.use(express.urlencoded())
+    this.app.use(express.urlencoded({ extended: true }))
 
     this.app.use(this.authenticateRoutes.bind(this))
     this.app.use(this.logErrors.bind(this))

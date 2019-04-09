@@ -9,10 +9,7 @@ async function run() {
   hub.start()
 }
 
-run().then(
-  () => process.exit(0),
-  err => {
-    console.error(err)
-    process.exit(1)
-  },
-)
+run().then().catch(e => {
+  console.error(e)
+  process.exit(1)
+})

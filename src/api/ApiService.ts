@@ -7,9 +7,9 @@ export const Router = require('express-promise-router')
 import { Container, Context } from '../Container'
 
 
-export abstract class ApiService<Handler=any> {
+export abstract class ApiService<Handler = any> {
   abstract namespace: string
-  abstract routes: Array<any>
+  abstract routes: any
   abstract handler: any
   abstract dependencies: { [N in keyof Handler]?: string }
 
@@ -30,7 +30,7 @@ export abstract class ApiService<Handler=any> {
         throw new Error(`Invalid path (too many parts): ${route}`)
 
       method = method.toLowerCase()
-      router[method](path, this.handleRequest.bind(this, handlerMethod))
+      router[method](path, this.handleRequest.bind(this, handlerMethod as any))
     })
     return router
   }
