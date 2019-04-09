@@ -1,11 +1,11 @@
-import { Registry, PartialServiceDefinitions, Container } from "./Container";
+import { Registry, PartialServiceDefinitions, Container, Context } from "./Container";
 import { MemoryCRAuthManager } from "./auth/CRAuthManager";
 import AuthApiService from "./auth/AuthApiService";
 import { ApiServer } from "./ApiServer";
 import Config from "./Config";
 import { DefaultAuthHandler } from "./middleware/AuthHandler";
 import { getRedisClient } from "./RedisClient";
-import { PgPoolService } from "./db/DBEngine";
+import { PgPoolService, PostgresDBEngine } from "./db/DBEngine";
 
 export default function defaultRegistry(otherRegistry?: Registry): Registry {
   const registry = new Registry(otherRegistry)
@@ -54,6 +54,13 @@ export const serviceDefinitions: PartialServiceDefinitions = {
   AuthHandler: {
     factory: (config: Config) => new DefaultAuthHandler(config),
     dependencies: ['Config'],
+    isSingleton: false
+  },
+
+  DBEngine: {
+    factory: (pool: PgPoolService, context: Context) =>
+      new PostgresDBEngine(pool, context),
+    dependencies: ['PgPoolService', 'Context'],
     isSingleton: false
   },
 }
