@@ -4,6 +4,8 @@ import AuthApiService from "./auth/AuthApiService";
 import { ApiServer } from "./ApiServer";
 import Config from "./Config";
 import { DefaultAuthHandler } from "./middleware/AuthHandler";
+import { getRedisClient } from "./RedisClient";
+import { PgPoolService } from "./db/DBEngine";
 
 export default function defaultRegistry(otherRegistry?: Registry): Registry {
   const registry = new Registry(otherRegistry)
@@ -31,6 +33,18 @@ export const serviceDefinitions: PartialServiceDefinitions = {
   CRAuthManager: {
     factory: (web3: any) => new MemoryCRAuthManager(web3),
     dependencies: ['Web3'],
+    isSingleton: true,
+  },
+
+  RedisClient: {
+    factory: (config: Config) => getRedisClient(config.redisUrl),
+    dependencies: ['Config'],
+    isSingleton: true
+  },
+
+  PgPoolService: {
+    factory: (config: Config) => new PgPoolService(config),
+    dependencies: ['Config'],
     isSingleton: true,
   },
 

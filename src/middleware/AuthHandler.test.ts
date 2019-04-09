@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { default as AuthHandler, DefaultAuthHandler } from './AuthHandler'
 import Config from '../Config'
-import { Role } from '../Role'
+import { Role } from '../role/Role'
 import { assert } from 'chai'
 
 describe('AuthHandler', () => {

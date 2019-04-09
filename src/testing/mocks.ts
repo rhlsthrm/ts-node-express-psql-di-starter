@@ -6,15 +6,9 @@ import { Container } from '../Container'
 
 import { truncateAllTables } from './eraseDb'
 import { ApiServer } from '../ApiServer'
-import { Role } from "../Role";
-import { mkAddress, mkSig, mkHash } from "./stateUtils";
-import { Validator } from '../vendor/connext/validator'
-import { Big } from '../util/bigNumber';
-import { SignerService } from '../SignerService';
-import { Utils } from '../vendor/connext/Utils';
+import { Role } from "../role/Role";
 import Config from '../Config';
-import { ChannelManagerChannelDetails } from '../vendor/connext/types';
-import { serviceDefinitions } from '../services'
+import { mkAddress } from './stateUtils';
 
 const databaseUrl = process.env.DATABASE_URL_TEST || 'postgres://127.0.0.1:5432';
 const redisUrl = process.env.REDIS_URL_TEST || 'redis://127.0.0.1:6379/6';
@@ -58,6 +52,20 @@ export class TestApiServer extends ApiServer {
     })
   }
 }
+
+export const testChannelManagerAddress = mkAddress('0xccc')
+export const testHotWalletAddress = mkAddress('0xddd')
+
+export const getTestConfig = (overrides?: any) => ({
+  ...Config.fromEnv(),
+  databaseUrl,
+  redisUrl,
+  sessionSecret: 'hummus',
+  hotWalletAddress: testHotWalletAddress,
+  channelManagerAddress: testChannelManagerAddress,
+  staleChannelDays: 1,
+  ...(overrides || {}),
+})
 
 export const mockServices: any = {
   'Config': {

@@ -2,12 +2,11 @@ import { Context } from "../Container";
 import * as chai from 'chai'
 import * as sinon from 'sinon'
 import * as _nock from 'nock'
-import { BigNumber } from 'bignumber.js'
 
 import defaultRegistry, { serviceDefinitions } from '../services'
 import { isBigNumber } from '../util'
 import { Registry, Container } from '../Container'
-import { mockServices, clearFakeClosingTime } from './mocks'
+import { mockServices } from './mocks'
 export { TestApiServer, getTestConfig } from './mocks'
 
 export type ServiceName = keyof typeof serviceDefinitions
@@ -19,8 +18,8 @@ export type ServiceType<N extends ServiceName> = ReturnType<(typeof serviceDefin
 export class TestServiceRegistry {
   overrides: any
   overrideDefinitions: any
-  registry: Registry
-  container: Container
+  registry?: Registry
+  container?: Container
   currentTest: any
 
   constructor(overrides?: any) {
@@ -83,11 +82,10 @@ export class TestServiceRegistry {
       this.get('RedisClient').flushall(),
       this.get('PgPoolService').clearDatabase(),
     ])
-    clearFakeClosingTime()
   }
 
   get<N extends ServiceName>(name: N, overrides?: ServiceDict): ServiceType<N> {
-    return this.container.resolve(name as string, overrides)
+    return this.container!.resolve(name as string, overrides)
   }
 }
 

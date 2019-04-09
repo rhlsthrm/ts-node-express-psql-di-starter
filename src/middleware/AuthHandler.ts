@@ -45,6 +45,7 @@ export class DefaultAuthHandler implements AuthHandler {
 
   async isAuthorized(req: express.Request): Promise<boolean> {
     const perm = this.acl.permissionForRoute(req.path as string)
+    console.log('perm: ', perm);
 
     if (perm === Role.NONE) {
       return true
