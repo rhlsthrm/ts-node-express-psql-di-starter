@@ -3,9 +3,13 @@ import { MemoryCRAuthManager } from "./auth/CRAuthManager";
 import AuthApiService from "./auth/AuthApiService";
 import { ApiServer } from "./ApiServer";
 import Config from "./Config";
+import { Client } from 'pg'
 import { DefaultAuthHandler } from "./middleware/AuthHandler";
 import { getRedisClient } from "./RedisClient";
-import { PgPoolService, PostgresDBEngine } from "./db/DBEngine";
+import DBEngine, { PgPoolService, PostgresDBEngine } from "./db/DBEngine";
+import ItemApiService from "./item/Item.Api";
+import ItemDao, { PostgresItemDao } from "./item/Item.Dao";
+import { ItemService } from "./item/Item.Service";
 
 export default function defaultRegistry(otherRegistry?: Registry): Registry {
   const registry = new Registry(otherRegistry)
@@ -25,7 +29,8 @@ export const serviceDefinitions: PartialServiceDefinitions = {
 
   ApiServerServices: {
     factory: () => [
-      AuthApiService
+      AuthApiService,
+      ItemApiService
     ],
     isSingleton: true,
   },
@@ -62,5 +67,17 @@ export const serviceDefinitions: PartialServiceDefinitions = {
       new PostgresDBEngine(pool, context),
     dependencies: ['PgPoolService', 'Context'],
     isSingleton: false
+  },
+
+  ItemDao: {
+    factory: (db: DBEngine<Client>) =>
+      new PostgresItemDao(db),
+    dependencies: ['DBEngine'],
+  },
+
+  ItemService: {
+    factory: (itemDao: ItemDao) =>
+      new ItemService(itemDao),
+    dependencies: ['ItemDao'],
   },
 }
