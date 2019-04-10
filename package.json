@@ -1,7 +1,7 @@
 {
-  "name": "cf-hub-experimental",
+  "name": "ts-node-express-psql-di-starter",
   "version": "1.0.0",
-  "description": "Connext Hub using Counterfactual Framework",
+  "description": "Starter kit for a modern, scalable backend",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register/type-check -r ./src/register/common.ts -r ./src/register/testing.ts \"src/**/*.test.ts\" --exit",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ConnextProject/cf-hub-experimental.git"
+    "url": "git+https://github.com/rhlsthrm/ts-node-express-psql-di-starter"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ConnextProject/cf-hub-experimental/issues"
+    "url": "https://github.com/rhlsthrm/ts-node-express-psql-di-starter/issues"
   },
-  "homepage": "https://github.com/ConnextProject/cf-hub-experimental#readme",
+  "homepage": "https://github.com/rhlsthrm/ts-node-express-psql-di-starter#readme",
   "dependencies": {
     "bignumber.js": "^8.1.1",
     "connect-redis": "^3.4.1",
